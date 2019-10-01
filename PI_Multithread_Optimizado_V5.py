@@ -13,6 +13,9 @@ resultadohilo = Queue()
 dividendovar = Queue()
 divisorvar = Queue()
 
+threaddividendo = []
+threaddivisor = []
+
 
 def dividendo(ks, dividendoqueue):
     dividendoqueue.put(Decimal(Decimal(pow(-1, ks)) * Decimal(factorial(6 * ks)) * (Decimal((545140134 * ks) + 13591409))))
@@ -28,12 +31,14 @@ def serie(kin, outqueue, precision):
     resultado = 0
     if kin > 0:
         for ks in range(0, kin):
-            threaddividendo = Thread(target=dividendo, args=(ks, dividendovar))
-            threaddivisor = Thread(target=divisor, args=(ks, divisorvar))
-            threaddividendo.start()
-            threaddivisor.start()
-            threaddividendo.join()
-            threaddivisor.join()
+            threaddividendo.append(ks)
+            threaddivisor.append(ks)
+            threaddividendo[ks] = Thread(target=dividendo, args=(ks, dividendovar))
+            threaddivisor[ks] = Thread(target=divisor, args=(ks, divisorvar))
+            threaddividendo[ks].start()
+            threaddivisor[ks].start()
+            threaddividendo[ks].join()
+            threaddivisor[ks].join()
             resultado += Decimal(dividendovar.get() / divisorvar.get())
         pi = Decimal(1 / (12 * resultado))
     else:
