@@ -15,11 +15,13 @@ divisorvar = Queue()
 
 
 def dividendo(ks, dividendoqueue):
-    dividendoqueue.put(Decimal(Decimal(pow(-1, ks)) * Decimal(factorial(6 * ks)) * (Decimal((545140134 * ks) + 13591409))))
+    dividendoqueue.put(
+        Decimal(Decimal(pow(-1, ks)) * Decimal(factorial(6 * ks)) * (Decimal((545140134 * ks) + 13591409))))
 
 
 def divisor(ks, divisorqueue):
-    divisorqueue.put(Decimal(Decimal(factorial(3 * ks)) * Decimal(pow(factorial(ks), 3)) * Decimal(pow(640320, (Decimal((3 * ks) + (3 / 2)))))))
+    divisorqueue.put(Decimal(Decimal(factorial(3 * ks)) * Decimal(pow(factorial(ks), 3)) * Decimal(
+        pow(640320, (Decimal((3 * ks) + (3 / 2)))))))
 
 
 # calculo de pi
@@ -45,7 +47,7 @@ hilos = int(input("Favor elegir la cantidad de hilos a usar: "))
 for hilo in range(0, hilos):
     print("Elija el valor de K para el hilo " + str(hilo + 1))
     k = int(input())
-    prec = 14 * (k + 1)
+    prec = 14 * k
     cantidadhilos.append(hilo)
     cantidadhilos[hilo] = Thread(target=serie, args=(k, resultadohilo, prec))
     cantidadhilos[hilo].start()
